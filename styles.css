@@ -190,16 +190,18 @@ body::after {
 h1 {
   margin: 0;
   font-family:
+    "Nunito",
     "Helvetica Neue",
     Helvetica,
     Arial,
     "Hiragino Sans",
     "Yu Gothic",
     sans-serif;
-  font-size: clamp(2.65rem, 7.2vw, 5.15rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 1;
+  font-size: clamp(2.45rem, 6.5vw, 4.65rem);
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  line-height: 1.02;
+  color: var(--text);
 }
 
 .tagline {
@@ -263,7 +265,7 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(2.7rem, 14vw, 3.8rem);
+    font-size: clamp(2.5rem, 12.5vw, 3.45rem);
   }
 
   .tagline {
