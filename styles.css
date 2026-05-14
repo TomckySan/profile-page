@@ -8,8 +8,28 @@
   --grid-line: #f1f1f1;
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+  --background: #ffffff;
+  --text: #111111;
+  --muted: #666666;
+  --line: #d8d8d8;
+  --line-strong: #111111;
+  --grid-line: #f1f1f1;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #111111;
+  --text: #f7f7f7;
+  --muted: #a7a7a7;
+  --line: #333333;
+  --line-strong: #f7f7f7;
+  --grid-line: #1f1f1f;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --background: #111111;
     --text: #f7f7f7;
     --muted: #a7a7a7;
@@ -63,6 +83,41 @@ body::before {
 
 body::after {
   bottom: clamp(20px, 5vw, 56px);
+}
+
+.theme-toggle {
+  position: fixed;
+  z-index: 1;
+  top: clamp(20px, 5vw, 56px);
+  right: clamp(20px, 5vw, 64px);
+  min-width: 64px;
+  min-height: 34px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
 }
 
 .profile {
@@ -188,6 +243,7 @@ h1 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
   .links a {
     transition: none;
   }

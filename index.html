@@ -8,9 +8,28 @@
       content="Tomcky - Forward Deployed Engineer / Product Management / Product Ops"
     >
     <title>Tomcky</title>
+    <script>
+      (() => {
+        const savedTheme = (() => {
+          try {
+            return localStorage.getItem("theme");
+          } catch {
+            return null;
+          }
+        })();
+
+        if (savedTheme === "light" || savedTheme === "dark") {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <button class="theme-toggle" type="button" aria-label="Switch to light mode">
+      <span class="theme-toggle__label" data-theme-label>Light</span>
+    </button>
+
     <main class="profile" aria-labelledby="profile-name">
       <figure class="portrait">
         <img src="profile.jpg" alt="Tomckyのプロフィール画像">
@@ -28,5 +47,47 @@
         <a href="https://tomcky.hatenadiary.jp/" target="_blank" rel="noopener noreferrer">はてなブログ</a>
       </nav>
     </main>
+    <script>
+      (() => {
+        const themeToggle = document.querySelector(".theme-toggle");
+        const themeLabel = document.querySelector("[data-theme-label]");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+        const getActiveTheme = () =>
+          document.documentElement.dataset.theme ||
+          (prefersDark.matches ? "dark" : "light");
+
+        const syncThemeToggle = () => {
+          const activeTheme = getActiveTheme();
+          const nextTheme = activeTheme === "dark" ? "light" : "dark";
+
+          themeToggle.setAttribute("aria-label", `Switch to ${nextTheme} mode`);
+          themeToggle.setAttribute("aria-pressed", activeTheme === "dark");
+          themeLabel.textContent = nextTheme === "dark" ? "Dark" : "Light";
+        };
+
+        themeToggle.addEventListener("click", () => {
+          const nextTheme = getActiveTheme() === "dark" ? "light" : "dark";
+
+          document.documentElement.dataset.theme = nextTheme;
+
+          try {
+            localStorage.setItem("theme", nextTheme);
+          } catch {
+            // The visual toggle should still work when storage is unavailable.
+          }
+
+          syncThemeToggle();
+        });
+
+        prefersDark.addEventListener("change", () => {
+          if (!document.documentElement.dataset.theme) {
+            syncThemeToggle();
+          }
+        });
+
+        syncThemeToggle();
+      })();
+    </script>
   </body>
 </html>
