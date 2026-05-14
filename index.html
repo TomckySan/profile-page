@@ -23,11 +23,29 @@
         }
       })();
     </script>
+    <link rel="icon" href="profile.jpg" type="image/jpeg">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <button class="theme-toggle" type="button" aria-label="Switch to light mode">
-      <span class="theme-toggle__label" data-theme-label>Light</span>
+      <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+      </span>
+      <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 14.5A7.6 7.6 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path>
+        </svg>
+      </span>
     </button>
 
     <main class="profile" aria-labelledby="profile-name">
@@ -50,7 +68,6 @@
     <script>
       (() => {
         const themeToggle = document.querySelector(".theme-toggle");
-        const themeLabel = document.querySelector("[data-theme-label]");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
         const getActiveTheme = () =>
@@ -63,7 +80,6 @@
 
           themeToggle.setAttribute("aria-label", `Switch to ${nextTheme} mode`);
           themeToggle.setAttribute("aria-pressed", activeTheme === "dark");
-          themeLabel.textContent = nextTheme === "dark" ? "Dark" : "Light";
         };
 
         themeToggle.addEventListener("click", () => {
