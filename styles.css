@@ -1,9 +1,22 @@
 :root {
+  color-scheme: light dark;
   --background: #ffffff;
   --text: #111111;
   --muted: #666666;
   --line: #d8d8d8;
   --line-strong: #111111;
+  --grid-line: #f1f1f1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111111;
+    --text: #f7f7f7;
+    --muted: #a7a7a7;
+    --line: #333333;
+    --line-strong: #f7f7f7;
+    --grid-line: #1f1f1f;
+  }
 }
 
 * {
@@ -28,7 +41,7 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), #f1f1f1 calc(100% - 1px)),
+    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), var(--grid-line) calc(100% - 1px)),
     var(--background);
   background-size: clamp(64px, 12vw, 148px) 100%;
 }
