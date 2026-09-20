@@ -62,9 +62,10 @@
     </button>
 
     <main class="profile" aria-labelledby="profile-name">
-      <figure class="portrait">
+      <button class="portrait" type="button" aria-label="プロフィールを崩して遊ぶ">
         <img src="profile.jpg" alt="Tomckyのプロフィール画像">
-      </figure>
+        <span class="portrait-hint" aria-hidden="true">What could go wrong?</span>
+      </button>
 
       <h1 id="profile-name">Tomcky</h1>
       <p class="tagline">
@@ -79,6 +80,7 @@
         <a href="https://tomcky.hatenadiary.jp/" target="_blank" rel="noopener noreferrer">はてなブログ</a>
       </nav>
     </main>
+    <script src="playground.js" defer></script>
     <script>
       (() => {
         const themeToggle = document.querySelector(".theme-toggle");

@@ -289,3 +289,182 @@ h1 {
     transition: none;
   }
 }
+
+.portrait {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  transition: transform 220ms ease, border-color 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.portrait:hover {
+  border-color: var(--line-strong);
+}
+
+.profile .portrait::before,
+.portrait-dock::before {
+  position: absolute;
+  inset: -5px;
+  border: 1px solid var(--muted);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+  animation: portrait-ripple 3.2s ease-out infinite;
+}
+
+.portrait-hint {
+  position: absolute;
+  bottom: calc(100% + 18px);
+  left: 50%;
+  padding: 10px 15px;
+  border-radius: 14px;
+  background: var(--text);
+  color: var(--background);
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 7px) rotate(-4deg) scale(0.94);
+  transform-origin: bottom center;
+  transition: opacity 180ms ease, transform 240ms ease;
+  pointer-events: none;
+}
+
+.portrait-hint::after {
+  position: absolute;
+  top: calc(100% - 4px);
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  background: inherit;
+  transform: rotate(45deg);
+  content: "";
+}
+
+.portrait:focus-visible .portrait-hint,
+.portrait-dock .portrait-hint {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(-4deg) scale(1);
+  animation: hint-appear 240ms ease-out both, hint-float 2.8s ease-in-out 240ms infinite;
+}
+
+@media (hover: hover) {
+  .portrait:hover .portrait-hint {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(-4deg) scale(1);
+    animation: hint-appear 240ms ease-out both, hint-float 2.8s ease-in-out 240ms infinite;
+  }
+}
+
+.playground .portrait-hint { display: none; }
+
+@keyframes hint-appear {
+  from { transform: translate(-50%, 7px) rotate(-8deg) scale(0.9); }
+  to { transform: translate(-50%, 0) rotate(-4deg) scale(1); }
+}
+
+@keyframes hint-float {
+  0%, 100% { transform: translate(-50%, 0) rotate(-4deg); }
+  50% { transform: translate(-50%, -5px) rotate(2deg); }
+}
+
+@keyframes portrait-ripple {
+  0% { opacity: 0.5; transform: scale(1); }
+  70%, 100% { opacity: 0; transform: scale(1.14); }
+}
+
+.portrait img { transition: transform 220ms ease; }
+.portrait:hover img { transform: rotate(-5deg); }
+.playground .portrait img { transform: none; transition: none; }
+
+.portrait:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 6px;
+}
+
+.playground {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+
+.is-playing {
+  overflow: hidden;
+}
+
+.is-playing > .profile {
+  visibility: hidden;
+}
+
+.is-playing > .theme-toggle {
+  z-index: 6;
+}
+
+.is-playing .playground {
+  display: block;
+}
+
+.playground .fragment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  pointer-events: none;
+  transition: none;
+  will-change: transform;
+}
+
+.portrait-dock {
+  position: fixed;
+  z-index: 4;
+  padding: 0;
+  border: 2px dashed var(--muted);
+  border-radius: 50%;
+  background: var(--grid-line);
+  opacity: 0.75;
+  transition: opacity 180ms ease, box-shadow 180ms ease;
+}
+
+.portrait-dock[hidden] { display: none; }
+.portrait-dock::before {
+  border-color: var(--text);
+  animation-duration: 2.4s;
+}
+
+.portrait-dock.is-ready {
+  opacity: 1;
+  border-style: solid;
+  border-color: var(--text);
+  box-shadow: 0 0 0 8px var(--grid-line);
+}
+
+.portrait-dock.is-ready::before {
+  animation: none;
+  opacity: 0.65;
+}
+
+.portrait-dock:focus-visible {
+  outline: 2px solid var(--muted);
+  outline-offset: 6px;
+}
+
+.playground.is-dragging { cursor: grabbing; }
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait, .portrait img, .portrait-dock, .portrait-hint { transition: none; }
+  .portrait .portrait-hint,
+  .portrait-dock .portrait-hint { animation: none; }
+  .profile .portrait::before, .portrait-dock::before {
+    animation: none;
+    opacity: 0.3;
+  }
+  .portrait:hover img { transform: none; }
+}
